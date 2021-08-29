@@ -11,8 +11,7 @@ export default class Search extends React.Component {
         };
         this.handleSearch = this.handleSearch.bind(this);
 
-    }
-    
+    }    
     handleSearch(e) {
         console.log("this.props in search",this.props);
         this.props.onSearch(e.currentTarget.value)

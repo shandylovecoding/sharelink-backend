@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux"
 import { DelLink } from "../Redux/actions"
+import { Col } from 'reactstrap';
 
 class PureLinklist extends React.Component {
 
@@ -14,11 +15,13 @@ class PureLinklist extends React.Component {
             this.props.links.map((link, i) => {
 
                 return (
-                    <div key={i} id={i} className="d-flex justify-content-center" >
-                        <a href={link.url}>{link.name}</a>
-                        {/* {link.tags.map((tag, y) => <span key={y}>{tag.name}</span>)} */}
-                        <button key={i} onClick={() => this.props.delLinkMDP(i)}>x</button>
+                  
+                    <div key={link.id} id={link.id} className="d-flex justify-content-center" >
+                        <Col><a a href={link.url}>{link.name}</a></Col>
+                        {link.tags.map((tag, y) => <Col key={y}>{tag.name}</Col>)}
+                        <Col><button key={link.id} onClick={() => this.props.delLinkMDP(link.id)}>x</button></Col>
                     </div>
+                    
                 )
             })
 
@@ -27,8 +30,6 @@ class PureLinklist extends React.Component {
 
 
 }
-
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

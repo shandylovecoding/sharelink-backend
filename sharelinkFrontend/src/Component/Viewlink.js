@@ -7,16 +7,17 @@ import { ListLink} from "../Redux/actions"
 
 
 class PureViewlink extends React.Component {
-
+  
+  componentDidMount() {
+    this.props.listLinkMDP("")
+  }
 
   onSearch = (search) => {
-
     this.props.listLinkMDP(search)
   }
 
   render() {
       console.log(this.props.links);
-
     return (
       <div>
         <Search onSearch={this.onSearch} />
@@ -29,7 +30,7 @@ class PureViewlink extends React.Component {
 const mapStateToProps = (state) =>{
   console.log(state);
       return {
-          links: state.linkStore.links
+          links: state.linkStore.links  
       }
 
 }

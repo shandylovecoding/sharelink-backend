@@ -3,14 +3,6 @@ import axios from "axios"
 export const ADD_LINK = "ADD_LINK"
 export const DEL_LINK = "DEL_LINK"
 export const LIST_LINK = "LIST_LINK"
-// export const LINK_REQUEST = "LINK_REQUEST"
-
-// export function AddLink (link){
-//     return {
-//         type: ADD_LINK,
-//         payload: link
-//     }
-// }
 
 export const AddLink = (link) => async(dispatch) =>{
     try{
@@ -25,15 +17,18 @@ export const AddLink = (link) => async(dispatch) =>{
     }
 }
 
-export function DelLink (index){
-    return {
-        type: DEL_LINK,
-        payload: index
+export const DelLink = (index) => async(dispatch) =>{
+    try{
+        
+        const {data} = await axios.delete(
+           `http://localhost:8000/link/${index}`
+        )
+        console.log("data in actions",data);
+        dispatch({type:DEL_LINK, payload: data})
+    } catch (err){
+        console.log(err);
     }
 }
-
-
-
 
 
 export const ListLink = (search) => async(dispatch) =>{

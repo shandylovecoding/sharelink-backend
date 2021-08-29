@@ -9,23 +9,44 @@ class LinkService {
     let query = this.knex
       .select("links.id", "links.name", "links.url",
         "tags.name as tag_name"
-       )
+      )
       .from("links")
       .innerJoin("links_tags", "links.id", "links_id")
       .innerJoin("tags", "tags.id", "tags_id")
       .where("links.name", "like", `%${search}%`)
       .orWhere("tags.name", "like", `%${search}%`)
+    var linkArray = []
+    return query.then(async (rows) => {
+      let prevlink
+      let array
+      for (let i = 0; i < rows.length; i++) {
 
-    return query.then((rows) => {
-      console.log("rows", rows);
-      return rows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        url: row.url,
-        tags: row.tag_name
+        if (prevlink == undefined || prevlink != rows[i].id) {
+          var tagQuery = await this.knex
+            .select("tags.name")
+            .from("tags")
+            .innerJoin("links_tags", "tags.id", "tags_id")
+            .where("links_tags.links_id", `${rows[i].id}`)
+            .then((rows) => {
+              return rows
+            })
+
+          array = {
+            id: rows[i].id,
+            name: rows[i].name,
+            url: rows[i].url,
+            tags: tagQuery
+          }
+          linkArray.push(array)
+          prevlink = rows[i].id
+        }
+
       }
-      ));
-    });
+
+      return linkArray
+    })
+
+
   }
 
   async add(link) {
@@ -77,19 +98,28 @@ class LinkService {
 
   }
 
-  // remove(id,user){
-  // let query=this.knex
-  // .select("id")
-  // .from("users")
-  // .where("users.username",user);
-  // return query.then((rows)=>{
-  //   if(rows.length===1){
-  //     return this.knex("links")
-  //     .where("id",id).del();
-  //   }else{
-  //     thrownewError(`Cannot remove a link when the user doesn't exist!`);
-  //   }
-  // });
-  // }
+  remove(id) {
+    console.log("id", id);
+    let query = this.knex
+      .select("*")
+      .from("links")
+      .innerJoin("links_tags", "links.id", "links_id")
+      .where("links.id", id)
+      .andWhere('links_tags.links_id', id)
+
+    return query.then((rows) => {
+      console.log("delete.rows", rows);
+      return this.knex("links_tags")
+      .where('links_tags.links_id', id)
+      .del()
+      .then(()=>{
+        return this.knex("links")
+        .where("links.id", id)
+        .del()
+      })
+     
+
+    });
+  }
 }
 module.exports = LinkService;
