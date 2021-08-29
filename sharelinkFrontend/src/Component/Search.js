@@ -14,12 +14,12 @@ export default class Search extends React.Component {
     }
     
     handleSearch(e) {
-        this.props.onSearch(e.currentTarget.value);
+        console.log("this.props in search",this.props);
+        this.props.onSearch(e.currentTarget.value)
 
         this.setState({
             search: e.currentTarget.value
         })
-
 
     }
 
@@ -28,10 +28,12 @@ export default class Search extends React.Component {
             <div className="d-flex justify-content-center">
                 <input type="text"
                     value={this.state.search}
-                    onChange={this.handleSearch}
+                    onChange={ (e)=>this.handleSearch(e)}
                     placeholder="Search Link.."
                 />
             </div>
         )
     }
 }
+
+

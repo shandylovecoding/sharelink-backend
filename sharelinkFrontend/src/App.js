@@ -1,7 +1,7 @@
 import React from "react";
 
-import {Addlink} from './component/Addlink'
-import Viewlink from "./component/Viewlink";
+import {Addlink} from './Component/Addlink'
+import {Viewlink} from "./Component/Viewlink";
 
 import { BrowserRouter } from 'react-router-dom'
 import { Link, Route } from "react-router-dom";
@@ -11,16 +11,14 @@ import { Link, Route } from "react-router-dom";
 export default class App extends React.Component {
   
 
-  addLinkHandler = (link) => {
+  // addLinkHandler = (link) => {
 
-    const linkList = this.state.links.concat(link)
-    console.log(linkList);
-    this.setState({
-      links: linkList,
-    });
-    console.log("this.state.links", this.state.links);
-    localStorage.setItem("links", JSON.stringify(linkList))
-  }
+  //   const linkList = this.state.links.concat(link)
+  //   console.log(linkList);
+  //   this.setState({
+  //     links: linkList,
+  //   });
+  // }
 
   render() {
     return (
@@ -30,7 +28,7 @@ export default class App extends React.Component {
             <div >
               <ul className="row justify-content-around">
                 <li>
-                  <Link to="/Linklist">Shandy's ShareLink</Link>
+                  Shandy's ShareLink
                 </li>
                 <li>
                   <Link to="/ViewLink">View Link</Link>
@@ -47,7 +45,7 @@ export default class App extends React.Component {
               <Addlink  />
             </Route>
             <Route path="/Viewlink" >
-              <Viewlink   />
+              <Viewlink />
             </Route>
           </div>
         </BrowserRouter>

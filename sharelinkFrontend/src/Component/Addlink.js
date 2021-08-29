@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, } from 'reactstrap';
 
 import { connect } from "react-redux"
-import { AddLink, DelLink} from "../redux/actions"
+import { AddLink, DelLink} from "../Redux/actions"
 
 class PureAddlink extends React.Component {
     constructor(props) {
@@ -18,24 +18,13 @@ class PureAddlink extends React.Component {
         };
         this.toggle = this.toggle.bind(this);
         this.addTag=this.addTag.bind(this);
-        // this.delete=this.delete.bind(this);
-        this.handleNameChange = this.handleNameChange.bind(this);
     }
     toggle() {
         this.setState({
             modal: !this.state.modal
         });
     }
-    handleNameChange(e) {
-        this.setState({
-            name: e.target.value,
-        });
-    }
-    handleUrlChange(e) {
-        this.setState({
-            url: e.target.value,
-        });
-    };
+
     addTag(e){
         e.preventDefault();
         this.setState({
@@ -76,7 +65,7 @@ class PureAddlink extends React.Component {
                     <ModalHeader toggle={this.toggle}>Add Link Form</ModalHeader>
                     <ModalBody>
                         <Form>
-                            <form onSubmit={this.handleSubmit}>
+                            <form >
                                 <FormGroup>
                                     <label for="name">Name</label>
                                     <input value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })} placeholder="linkname" />
