@@ -17,7 +17,6 @@ class PureViewlink extends React.Component {
   }
 
   render() {
-      console.log(this.props.links);
     return (
       <div>
         <Search onSearch={this.onSearch} />

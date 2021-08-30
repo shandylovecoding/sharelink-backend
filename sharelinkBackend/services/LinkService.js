@@ -5,22 +5,21 @@ class LinkService {
   }
 
   list(search) {
-    console.log("this is Link service");
+
+    console.log("search",search);
     let query = this.knex
       .select("links.id", "links.name", "links.url",
-        "tags.name as tag_name"
       )
       .from("links")
-      .innerJoin("links_tags", "links.id", "links_id")
-      .innerJoin("tags", "tags.id", "tags_id")
       .where("links.name", "like", `%${search}%`)
-      .orWhere("tags.name", "like", `%${search}%`)
+      
+    console.log("this is Link service");
     var linkArray = []
     return query.then(async (rows) => {
       let prevlink
       let array
       for (let i = 0; i < rows.length; i++) {
-
+          console.log("rowsssss",rows);
         if (prevlink == undefined || prevlink != rows[i].id) {
           var tagQuery = await this.knex
             .select("tags.name")
@@ -42,7 +41,7 @@ class LinkService {
         }
 
       }
-
+      console.log("linkArray",linkArray);
       return linkArray
     })
 
@@ -50,7 +49,7 @@ class LinkService {
   }
 
   async add(link) {
-
+    console.log(link);
     let query = await this.knex.insert({
       name: link.name,
       url: link.url,

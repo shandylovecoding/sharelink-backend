@@ -26,7 +26,7 @@ class LinkRouter {
     post(req, res) {
         return this.linkService
             .add(req.body)
-            .then(() => this.linkService.list())
+            .then(() => this.linkService.list(""))
             .then((links) => {
                 return res.json(links);
             })
@@ -38,8 +38,9 @@ class LinkRouter {
         console.log("deleting");
         return this.linkService
             .remove(req.params.id)
-            .then(() => this.linkService.list())
+            .then(() => this.linkService.list(""))
             .then((links) => {
+                console.log("links",links)
                 return res.json(links)
             })
             // .catch((err) => res.status(500).json(err));

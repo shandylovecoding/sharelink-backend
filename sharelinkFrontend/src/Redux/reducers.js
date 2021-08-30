@@ -6,22 +6,20 @@ const initialState = {
 
 export function linkReducer(state = initialState, action) {
     switch (action.type) {
-        // case LINK_REQUEST:
-        // console.log("LINK_REQUEST",state);
-        // return{...state}
         case LIST_LINK:
-            return {
-                links: action.payload
-            }
+            console.log("list link action.payload in reducer",action.payload);
+            return { links: action.payload }
         case ADD_LINK:
+            console.log("add link action.payload in reducer",action.payload);
             return {
-                links: action.payload
+              links: state.links.concat(action.payload)
             };
         case DEL_LINK:
+            console.log("del link action.payload in reducer",action.payload);
             return {
-                links: action.payload
+              links: [...action.payload]
             }
-        default:
-            return state
+            default:
+                return state
     }
 }

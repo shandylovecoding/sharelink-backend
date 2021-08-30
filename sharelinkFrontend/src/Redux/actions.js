@@ -11,7 +11,7 @@ export const AddLink = (link) => async(dispatch) =>{
            ` http://localhost:8000/link`,link
         )
         console.log("data in actions",data);
-        dispatch({type:ADD_LINK, payload: data})
+        dispatch({type:ADD_LINK, payload: link})
     } catch (err){
         console.log(err);
     }
@@ -24,6 +24,7 @@ export const DelLink = (index) => async(dispatch) =>{
            `http://localhost:8000/link/${index}`
         )
         console.log("data in actions",data);
+
         dispatch({type:DEL_LINK, payload: data})
     } catch (err){
         console.log(err);
@@ -37,8 +38,7 @@ export const ListLink = (search) => async(dispatch) =>{
         const {data} = await axios.get(
            ` http://localhost:8000/link?search=${search}`
         )
-        console.log('data in actions(Listlink)',data);
-        
+        console.log('<<<<<<>>>>>>data in actions(Listlink)',data);
         dispatch({type:LIST_LINK, payload: data})
     } catch (err){
         console.log(err);
